@@ -93,7 +93,7 @@
         <TextView
             android:id="@+id/textView4"
             style="@style/textStyle"
-            android:text="amount"
+            android:text="Amount"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout3" />
 
@@ -127,6 +127,7 @@
             android:layout_marginTop="16dp"
             android:backgroundTint="@color/beige"
             android:text="Convert"
+            android:visibility="invisible"
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

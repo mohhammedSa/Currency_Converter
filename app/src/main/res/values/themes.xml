@@ -4,6 +4,7 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="colorPrimary">@color/dark_bleu</item>
+        <item name="android:textColorSecondary">@color/gold</item>
     </style>
 
     <style name="Theme.CurrencyApp" parent="Base.Theme.CurrencyApp" />

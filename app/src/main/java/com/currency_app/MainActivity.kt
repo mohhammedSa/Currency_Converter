@@ -29,10 +29,6 @@ class MainActivity : AppCompatActivity() {
         binding.toEditText.setAdapter(myAdapter)
         countResult()
 
-        binding.convertBtn.setOnClickListener {
-            countResult()
-        }
-
         binding.fromEditText.addTextChangedListener {
             countResult()
         }
@@ -40,7 +36,10 @@ class MainActivity : AppCompatActivity() {
             countResult()
         }
         binding.amountEditText.addTextChangedListener {
-            countResult()
+            if (binding.amountEditText.text!!.isNotEmpty())
+                countResult()
+            else
+                binding.amountEditText.error = "Required"
         }
     }
 
@@ -48,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         val from = getThreeLetterCurrencyCode(binding.fromEditText.text.toString())
         val to = getThreeLetterCurrencyCode(binding.toEditText.text.toString())
         val amount = binding.amountEditText.text.toString().toFloat()
-        getCurrenciesValue(from, to, amount)
+        getCurrenciesValueAndChangeResultEditText(from, to, amount)
     }
 
     private fun getThreeLetterCurrencyCode(str: String): String {
@@ -77,7 +76,7 @@ class MainActivity : AppCompatActivity() {
         return codesList
     }
 
-    private fun getCurrenciesValue(from: String, to: String, amount: Float) {
+    private fun getCurrenciesValueAndChangeResultEditText(from: String, to: String, amount: Float) {
         val url = "https://v6.exchangerate-api.com/v6/9d558c6419be1bfd5e302dd8/latest/USD"
         val queue = Volley.newRequestQueue(this)
         val jsonRequest = JsonObjectRequest(
@@ -86,7 +85,8 @@ class MainActivity : AppCompatActivity() {
                 val currencyFrom = it.getJSONObject("conversion_rates").getString(from)
                 val currencyTo = it.getJSONObject("conversion_rates").getString(to)
                 val result = currencyTo.toFloat() * amount / currencyFrom.toFloat()
-                binding.resultEditText.text = Editable.Factory().newEditable(result.toString())
+                val formattedResult = String.format("%.2f",result)
+                binding.resultEditText.text = Editable.Factory().newEditable(formattedResult)
             },
             { }
         )
